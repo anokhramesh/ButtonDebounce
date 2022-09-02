@@ -1,7 +1,7 @@
 /*
  * File:   ButtonDebounce.c
  * Author: Anokhramesh
- *
+ *https://www.allaboutcircuits.com/technical-articles/switch-bounce-how-to-deal-with-it/
  * Created on September 2, 2022, 11:23 AM
  */
 #include <stdio.h>
