@@ -7,11 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <xc.h>
-__CONFIG(FOSC_INTOSCIO & WDTE_OFF & PWRTE_OFF & MCLRE_ON & BOREN_ON & LVP_ON & CPD_OFF & CP_OFF);
+__CONFIG(FOSC_INTOSCIO & WDTE_OFF & PWRTE_OFF & MCLRE_ON & BOREN_ON & LVP_ON & CPD_OFF & CP_OFF);//PIC COnfiguration Bit setting
 #define _XTAL_FREQ 4000000// CRYSTAL FREQUENCY 4 MhZ
-#define LEDGreen PORTBbits.RB3//connect LEdGreen to PORTB Pin RB3
-#define Relay PORTBbits.RB2//connect Relay to PORTB Pin RB2
-#define BTN  PORTBbits.RB0//connect Push Button to PORTB Pin RB0
+#define LEDGreen PORTBbits.RB3//Connect LEDGreen to PORTB Pin RB3
+#define Relay PORTBbits.RB2//Connect Relay to PORTB Pin RB2
+#define BTN  PORTBbits.RB0//Connect Push Button to PORTB Pin RB0 pull down to GND via 10K resister
 
 // VARIABLES
 char BTN_pressed = 0;
@@ -23,16 +23,16 @@ int main(int argc, char** argv) {
     // Comparators off
     CMCON = 0x07;
     // Port directions
-    TRISB = 0b00000001;// set PORTB pin RB0 as INPUT
+    TRISB = 0b00000001;// set PORTB pin RB0 as an INPUT
     // Port state, all low
-    PORTB = 0b00000000;//initial value of entire PORTB as LOW
-    // Starting with LED1 high and LED2 low
+    PORTB = 0b00000000;//set initial value of entire PORTB as LOW
+    // Starting with LEDGreen HIGH and Relay is LOW
     LEDGreen = 1;
     Relay = 0;
     while (1)
     {
         // If BTN is pressed 
-        if (BTN == 1)
+        if (BTN == 1)// if button value is HIGH
         {
             // Bouncing has started so increment BTN_press with 1
             BTN_press++;
@@ -46,11 +46,11 @@ int main(int argc, char** argv) {
                 if (BTN_pressed == 0)
                 {
                     // Toggle the LEDs
-                    LEDGreen ^= 1;
-                    Relay ^= 1;
-                    BTN_pressed = 1;
+                    LEDGreen ^= 1;// switch the current status of LEDGReen to Back
+                    Relay ^= 1;// switch the current status of Relay to Back
+                    BTN_pressed = 1;//set the value of variable BTN_pressed is equal to 1.
                 }
-                BTN_press = 0;
+                BTN_press = 0;//set the value of variable BTN_press is equal to 0.
             }
         }
         else
@@ -62,8 +62,8 @@ int main(int argc, char** argv) {
             // pressed button
             if (BTN_release > Bouncevalue)
             {
-                BTN_pressed = 0;
-                BTN_release = 0;
+                BTN_pressed = 0;//set the value of variable BTN_pressed is equal to 0.
+                BTN_release = 0;//set the value of variable BTN_release is equal to 0.
             }
         }
         
